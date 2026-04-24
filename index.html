@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Best Resin Art in Ambala | Custom Gifts</title>
+  <meta name="description" content="Resin Creations offers luxury custom resin art and handmade gifts in Ambala. Premium finishes, personalized orders, and WhatsApp booking." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script defer src="script.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#home" class="brand" id="brand-name">Resin Creations</a>
+      <div class="header-actions">
+        <a href="admin.html" class="admin-link">Admin</a>
+        <button class="button button-primary" onclick="orderNow()">Order</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="hero-slider" aria-hidden="true">
+        <img src="images/banner1.png" alt="Resin art image 1">
+        <img src="images/banner2.png" alt="Resin art image 2">
+        <img src="images/banner3.png" alt="Resin art image 3">
+        <img src="images/banner4.png" alt="Resin art image 4">
+      </div>
+      <div class="hero-overlay"></div>
+      <div class="floating-elements">
+        <div class="float-item"></div>
+        <div class="float-item"></div>
+        <div class="float-item"></div>
+        <div class="float-item"></div>
+        <div class="float-item"></div>
+      </div>
+      <button class="slider-nav slider-prev" aria-label="Previous image">&larr;</button>
+      <button class="slider-nav slider-next" aria-label="Next image">&rarr;</button>
+      <div class="slider-dots"></div>
+      <div class="hero-card">
+        <div class="hero-content">
+          <p class="eyebrow" id="hero-eyebrow">✨ Handcrafted & Personalized</p>
+          <h1 id="hero-title">Luxury Resin Gifts</h1>
+          <p class="hero-copy" id="hero-description">Resin work for resin frame, resin key chain, resin varmala preservation, resin bookmark, resin photo keychain, resin tissue holder, alphabet key chain, wedding card preservation, customised ring plate, resin pooja thali, resin name board, car hanging, dashboard and more.</p>
+          <div class="hero-actions">
+            <button class="button button-primary" onclick="orderNow()">Start Order</button>
+            <a class="button button-secondary" href="#order">Place an Order</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="products">
+      <div class="container section-head">
+        <span class="section-label" id="featured-label">Our Collection</span>
+        <h2 id="featured-title">Featured Products</h2>
+      </div>
+      <div class="container product-grid featured-products">
+        <article class="product-card animate-on-scroll" data-featured-card data-card-index="0" onclick="openImage(this)">
+          <img src="images/image2.png" alt="Resin Frame">
+          <div class="product-copy">
+            <h3>🎁 Resin Frame</h3>
+            <p>Personalized resin frames with photo inserts, pearl accents, and gold detailing. Ideal for weddings, anniversaries, and custom gifting.</p>
+          </div>
+          <button class="button button-card" onclick="buyProduct('Resin Frame'); event.stopPropagation();">Order</button>
+        </article>
+
+        <article class="product-card animate-on-scroll" data-featured-card data-card-index="1" onclick="openImage(this)">
+          <img src="images/image1.png" alt="Resin Key Chain">
+          <div class="product-copy">
+            <h3>🔑 Resin Key Chain</h3>
+            <p>Personalized resin keychains with letters, names, or photos. Compact and durable keepsakes for everyday use.</p>
+          </div>
+          <button class="button button-card" onclick="buyProduct('Resin Key Chain'); event.stopPropagation();">Order</button>
+        </article>
+
+        <article class="product-card animate-on-scroll" data-featured-card data-card-index="2" onclick="openImage(this)">
+          <img src="images/image3.png" alt="Resin Varmala Preservation">
+          <div class="product-copy">
+            <h3>💐 Resin Varmala Preservation</h3>
+            <p>Preserve your wedding varmala in elegant resin with photo details and custom accents. A beautiful memory keepsake.</p>
+          </div>
+          <button class="button button-card" onclick="buyProduct('Resin Varmala Preservation'); event.stopPropagation();">Order</button>
+        </article>
+
+        <article class="product-card animate-on-scroll" data-featured-card data-card-index="3" onclick="openImage(this)">
+          <img src="images/image4.png" alt="Resin Photo Keychain">
+          <div class="product-copy">
+            <h3>📸 Resin Photo Keychain</h3>
+            <p>Custom resin photo keychains with vibrant photos, names, and decorative details for a memorable gift.</p>
+          </div>
+          <button class="button button-card" onclick="buyProduct('Resin Photo Keychain'); event.stopPropagation();">Order</button>
+        </article>
+
+        <article class="product-card animate-on-scroll" data-featured-card data-card-index="4" onclick="openImage(this)">
+          <img src="images/image4.png" alt="Wedding Card Preservation">
+          <div class="product-copy">
+            <h3>💌 Wedding Card Preservation</h3>
+            <p>Encapsulate wedding cards in premium resin for a stylish keepsake that preserves your invitation forever.</p>
+          </div>
+          <button class="button button-card" onclick="buyProduct('Wedding Card Preservation'); event.stopPropagation();">Order</button>
+        </article>
+
+        <article class="product-card animate-on-scroll" data-featured-card data-card-index="5" onclick="openImage(this)">
+          <img src="images/image6.png" alt="Resin Pooja Thali">
+          <div class="product-copy">
+            <h3>🙏 Resin Pooja Thali</h3>
+            <p>Handcrafted resin pooja thali with custom colors and detailing. Perfect for rituals, decor, and meaningful ceremonies.</p>
+          </div>
+          <button class="button button-card" onclick="buyProduct('Resin Pooja Thali'); event.stopPropagation();">Order</button>
+        </article>
+      </div>
+
+      <div class="container section-head" style="margin-top: 3rem;">
+        <h2 id="more-products-title">More Products</h2>
+      </div>
+      <div class="container product-grid more-products" id="more-products-grid"></div>
+    </section>
+
+    <section class="section gallery-section" id="gallery">
+      <div class="container section-head">
+        <span class="section-label" id="gallery-label">Portfolio</span>
+        <h2 id="gallery-title">Our Work</h2>
+      </div>
+      <div class="container gallery-grid">
+        <img class="animate-on-scroll" data-gallery-index="0" src="images/image4.png" alt="Resin keychain close-up" onclick="openImage(this)">
+        <img class="animate-on-scroll" data-gallery-index="1" src="images/image1.png" alt="Resin photo frame styled" onclick="openImage(this)">
+        <img class="animate-on-scroll" data-gallery-index="2" src="images/image3.png" alt="Resin art detail" onclick="openImage(this)">
+        <img class="animate-on-scroll" data-gallery-index="3" src="images/image4.png" alt="Resin product display" onclick="openImage(this)">
+        <img class="animate-on-scroll" data-gallery-index="4" src="https://images.unsplash.com/photo-1602524817863-24b8884d13a0?auto=format&fit=crop&w=900&q=80" alt="Resin art close-up" onclick="openImage(this)">
+        <img class="animate-on-scroll" data-gallery-index="5" src="https://images.unsplash.com/photo-1556012018-79e55c21c1cc?auto=format&fit=crop&w=900&q=80" alt="Premium resin product display" onclick="openImage(this)">
+      </div>
+    </section>
+
+    <section class="section process-section" id="process">
+      <div class="container section-head">
+        <span class="section-label" id="process-label">Our Process</span>
+        <h2 id="process-title">How Your Resin Piece Comes to Life</h2>
+      </div>
+      <div class="container process-grid">
+        <article class="process-card animate-on-scroll" data-process-index="0">
+          <span class="process-step">01</span>
+          <h3>Consultation</h3>
+          <p>We discuss your vision, colors, and personalization details to craft the perfect piece.</p>
+        </article>
+        <article class="process-card animate-on-scroll" data-process-index="1">
+          <span class="process-step">02</span>
+          <h3>Design</h3>
+          <p>Our team refines the design into a premium layout with elegant finishes and clear presentation.</p>
+        </article>
+        <article class="process-card animate-on-scroll" data-process-index="2">
+          <span class="process-step">03</span>
+          <h3>Creation</h3>
+          <p>Each resin piece is handcrafted using layered techniques and cured to achieve a glossy, lasting finish.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section values-section" id="values">
+      <div class="container section-head">
+        <span class="section-label" id="values-label">Why Choose Us</span>
+        <h2 id="values-title">Luxury Resin Gifts with a Personal Touch</h2>
+      </div>
+      <div class="container values-grid">
+        <article class="value-card animate-on-scroll" data-value-index="0">
+          <div class="value-icon">✨</div>
+          <h3>Elegant Finishes</h3>
+          <p>Every piece is polished and sealed for a refined premium look.</p>
+        </article>
+        <article class="value-card animate-on-scroll" data-value-index="1">
+          <div class="value-icon">🕒</div>
+          <h3>Fast Turnaround</h3>
+          <p>Quick order confirmation with reliable production timelines and delivery.</p>
+        </article>
+        <article class="value-card animate-on-scroll" data-value-index="2">
+          <div class="value-icon">💬</div>
+          <h3>Personalized Support</h3>
+          <p>Direct WhatsApp ordering and design guidance from start to finish.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section reviews-section" id="reviews">
+      <div class="container section-head">
+        <span class="section-label" id="reviews-label">Testimonials</span>
+        <h2 id="reviews-title">Customer Reviews</h2>
+      </div>
+      <div class="container review-grid">
+        <article class="review-card animate-on-scroll" data-review-index="0">
+          <div class="stars">★★★★★</div>
+          <p>“Incredible quality and premium presentation. The finished piece felt luxurious and made for a memorable gift.”</p>
+        </article>
+        <article class="review-card animate-on-scroll" data-review-index="1">
+          <div class="stars">★★★★★</div>
+          <p>“Excellent communication and beautifully packaged artwork. I will order again for another celebration.”</p>
+        </article>
+        <article class="review-card animate-on-scroll" data-review-index="2">
+          <div class="stars">★★★★★</div>
+          <p>“Fast delivery and the custom engraving was flawless. Truly a premium resin experience.”</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section order-section" id="order">
+      <div class="container order-panel animate-on-scroll">
+        <div class="order-copy">
+          <span class="section-label" id="order-label">Smart Order</span>
+          <h2 id="order-title">Place Your Order on WhatsApp</h2>
+          <p id="order-description">Fill the form below and send your order instantly. We will confirm the details and begin crafting your resin piece.</p>
+        </div>
+        <form class="order-form" onsubmit="sendOrder(event)">
+          <label>
+            Name
+            <input type="text" id="customer-name" placeholder="Your name" required>
+          </label>
+          <label>
+            Product
+            <select id="product-select" required>
+              <option value="">Select a product</option>
+                  <option value="Resin Frame">Resin Frame</option>
+              <option value="Resin Key Chain">Resin Key Chain</option>
+              <option value="Resin Varmala Preservation">Resin Varmala Preservation</option>
+              <option value="Resin Bookmark">Resin Bookmark</option>
+              <option value="Resin Photo Keychain">Resin Photo Keychain</option>
+              <option value="Resin Tissue Holder">Resin Tissue Holder</option>
+              <option value="Alphabet Key Chain">Alphabet Key Chain</option>
+              <option value="Wedding Card Preservation">Wedding Card Preservation</option>
+              <option value="Customised Ring Plate">Customised Ring Plate</option>
+              <option value="Resin Pooja Thali">Resin Pooja Thali</option>
+              <option value="Resin Name Board">Resin Name Board</option>
+              <option value="Car Hanging">Car Hanging</option>
+              <option value="Dashboard">Dashboard</option>
+            </select>
+          </label>
+          <label>
+            Custom text
+            <input type="text" id="custom-text" placeholder="Name, date or message">
+          </label>
+          <button type="submit" class="button button-primary">Send Order on WhatsApp</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <button class="back-to-top" id="backToTop" aria-label="Back to top">↑</button>
+
+  <div class="popup-overlay" id="popup" onclick="closeImage()">
+    <div class="popup-card" onclick="event.stopPropagation()">
+      <button class="popup-close" onclick="closeImage()" aria-label="Close image preview">×</button>
+      <img id="popup-img" alt="Product preview">
+    </div>
+  </div>
+
+  <script>
+    const defaultAdminData = {
+      siteName: 'Resin Creations',
+      siteTitle: 'Best Resin Art in Ambala | Custom Gifts',
+      metaDescription: 'Resin Creations offers luxury custom resin art and handmade gifts in Ambala. Premium finishes, personalized orders, and WhatsApp booking.',
+      hero: {
+        eyebrow: '✨ Handcrafted & Personalized',
+        title: 'Luxury Resin Gifts',
+        description: 'Beautifully crafted custom resin art with pearl accents, gold flakes & personalized touches. Perfect for weddings, anniversaries, and memorable moments.',
+        images: [
+          'images/banner1.png',
+          'images/banner2.png',
+          'images/banner3.png',
+          'images/banner4.png'
+        ],
+        alts: [
+          'Resin art image 1',
+          'Resin art image 2',
+          'Resin art image 3',
+          'Resin art image 4'
+        ]
+      },
+      featuredSection: {
+        label: 'Our Collection',
+        title: 'Featured Products'
+      },
+      featuredProducts: [
+        {
+          img: 'images/image2.png',
+          alt: 'Resin Frame',
+          title: '🎁 Resin Frame',
+          description: 'Personalized resin frames with photo inserts, pearl accents, and gold detailing. Ideal for weddings, anniversaries, and custom gifting.',
+          orderName: 'Resin Frame',
+          orderLabel: 'Order'
+        },
+        {
+          img: 'images/image1.png',
+          alt: 'Resin Key Chain',
+          title: '🔑 Resin Key Chain',
+          description: 'Personalized resin keychains with letters, names, or photos. Compact and durable keepsakes for everyday use.',
+          orderName: 'Resin Key Chain',
+          orderLabel: 'Order'
+        },
+        {
+          img: 'images/image3.png',
+          alt: 'Resin Varmala Preservation',
+          title: '💐 Resin Varmala Preservation',
+          description: 'Preserve your wedding varmala in elegant resin with photo details and custom accents. A beautiful memory keepsake.',
+          orderName: 'Resin Varmala Preservation',
+          orderLabel: 'Order'
+        },
+        {
+          img: 'images/image4.png',
+          alt: 'Resin Photo Keychain',
+          title: '📸 Resin Photo Keychain',
+          description: 'Custom resin photo keychains with vibrant photos, names, and decorative details for a memorable gift.',
+          orderName: 'Resin Photo Keychain',
+          orderLabel: 'Order'
+        },
+        {
+          img: 'images/image4.png',
+          alt: 'Wedding Card Preservation',
+          title: '💌 Wedding Card Preservation',
+          description: 'Encapsulate wedding cards in premium resin for a stylish keepsake that preserves your invitation forever.',
+          orderName: 'Wedding Card Preservation',
+          orderLabel: 'Order'
+        },
+        {
+          img: 'images/image6.png',
+          alt: 'Resin Pooja Thali',
+          title: '🙏 Resin Pooja Thali',
+          description: 'Handcrafted resin pooja thali with custom colors and detailing. Perfect for rituals, decor, and meaningful ceremonies.',
+          orderName: 'Resin Pooja Thali',
+          orderLabel: 'Order'
+        }
+      ],
+      moreProductsSection: {
+        title: 'More Products'
+      },
+      moreProducts: [
+        {
+          title: '📖 Resin Bookmark',
+          description: 'Beautiful resin bookmarks with names, glitter accents, and personalized artwork. Great for book lovers.',
+          orderName: 'Resin Bookmark',
+          orderLabel: 'Order'
+        },
+        {
+          title: '🧻 Resin Tissue Holder',
+          description: 'Decorative resin tissue holders with luxury finishes and custom designs for home or gifting.',
+          orderName: 'Resin Tissue Holder',
+          orderLabel: 'Order'
+        },
+        {
+          title: '🔤 Alphabet Key Chain',
+          description: 'Personalized alphabet key chains made in resin for unique name keepsakes and decorative charms.',
+          orderName: 'Alphabet Key Chain',
+          orderLabel: 'Order'
+        },
+        {
+          title: '💎 Customised Ring Plate',
+          description: 'Custom resin ring plates with names, dates, and elegant detailing for wedding ceremonies.',
+          orderName: 'Customised Ring Plate',
+          orderLabel: 'Order'
+        },
+        {
+          title: '🪧 Resin Name Board',
+          description: 'Custom resin name boards for rooms, desks, or gifting, with premium finishes and personalization.',
+          orderName: 'Resin Name Board',
+          orderLabel: 'Order'
+        },
+        {
+          title: '🚗 Car Hanging',
+          description: 'Resin car hangings made to personalize your vehicle with names, initials, or decorative motifs.',
+          orderName: 'Car Hanging',
+          orderLabel: 'Order'
+        },
+        {
+          title: '📟 Dashboard',
+          description: 'Resin dashboard decor for cars with elegant custom designs and easy-to-hang styling.',
+          orderName: 'Dashboard',
+          orderLabel: 'Order'
+        }
+      ],
+      gallerySection: {
+        label: 'Portfolio',
+        title: 'Our Work'
+      },
+      gallery: [
+        { src: 'images/image4.png', alt: 'Resin keychain close-up' },
+        { src: 'images/image1.png', alt: 'Resin photo frame styled' },
+        { src: 'images/image3.png', alt: 'Resin art detail' },
+        { src: 'images/image4.png', alt: 'Resin product display' },
+        { src: 'https://images.unsplash.com/photo-1602524817863-24b8884d13a0?auto=format&fit=crop&w=900&q=80', alt: 'Resin art close-up' },
+        { src: 'https://images.unsplash.com/photo-1556012018-79e55c21c1cc?auto=format&fit=crop&w=900&q=80', alt: 'Premium resin product display' }
+      ],
+      processSection: {
+        label: 'Our Process',
+        title: 'How Your Resin Piece Comes to Life'
+      },
+      process: [
+        { step: '01', title: 'Consultation', description: 'We discuss your vision, colors, and personalization details to craft the perfect piece.' },
+        { step: '02', title: 'Design', description: 'Our team refines the design into a premium layout with elegant finishes and clear presentation.' },
+        { step: '03', title: 'Creation', description: 'Each resin piece is handcrafted using layered techniques and cured to achieve a glossy, lasting finish.' }
+      ],
+      valuesSection: {
+        label: 'Why Choose Us',
+        title: 'Luxury Resin Gifts with a Personal Touch'
+      },
+      values: [
+        { icon: '✨', title: 'Elegant Finishes', description: 'Every piece is polished and sealed for a refined premium look.' },
+        { icon: '🕒', title: 'Fast Turnaround', description: 'Quick order confirmation with reliable production timelines and delivery.' },
+        { icon: '💬', title: 'Personalized Support', description: 'Direct WhatsApp ordering and design guidance from start to finish.' }
+      ],
+      reviewsSection: {
+        label: 'Testimonials',
+        title: 'Customer Reviews'
+      },
+      reviews: [
+        { stars: '★★★★★', text: '“Incredible quality and premium presentation. The finished piece felt luxurious and made for a memorable gift.”' },
+        { stars: '★★★★★', text: '“Excellent communication and beautifully packaged artwork. I will order again for another celebration.”' },
+        { stars: '★★★★★', text: '“Fast delivery and the custom engraving was flawless. Truly a premium resin experience.”' }
+      ],
+      orderSection: {
+        label: 'Smart Order',
+        title: 'Place Your Order on WhatsApp',
+        description: 'Fill the form below and send your order instantly. We will confirm the details and begin crafting your resin piece.',
+        productOptions: ['Resin Frame', 'Resin Key Chain', 'Resin Varmala Preservation', 'Resin Bookmark', 'Resin Photo Keychain', 'Resin Tissue Holder', 'Alphabet Key Chain', 'Wedding Card Preservation', 'Customised Ring Plate', 'Resin Pooja Thali', 'Resin Name Board', 'Car Hanging', 'Dashboard']
+      }
+    };
+    function getAdminData() {
+      const raw = localStorage.getItem('resinAdminData');
+      if (!raw) return defaultAdminData;
+      try {
+        return JSON.parse(raw);
+      } catch (error) {
+        return defaultAdminData;
+      }
+    }
+
+    function setText(selector, value) {
+      if (!value) return;
+      const element = document.querySelector(selector);
+      if (element) element.textContent = value;
+    }
+
+    function updateButton(card, item) {
+      const button = card.querySelector('button.button-card');
+      if (!button || !item) return;
+      if (item.orderLabel) button.textContent = item.orderLabel;
+      if (item.orderName) {
+        const safeValue = item.orderName.replace(/"/g, '&quot;');
+        button.setAttribute('onclick', `buyProduct("${safeValue}"); event.stopPropagation();`);
+      }
+    }
+
+    function escapeHtml(value) {
+      return value ? value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;') : '';
+    }
+
+    function renderMoreProducts(data) {
+      const container = document.getElementById('more-products-grid');
+      if (!container) return;
+
+      container.innerHTML = (data.moreProducts || []).map((item, index) => {
+        const title = escapeHtml(item.title || '');
+        const description = escapeHtml(item.description || '');
+        const orderName = (item.orderName || item.title || '').replace(/'/g, "\\'");
+
+        return `
+          <article class="product-card animate-on-scroll" data-more-card data-card-index="${index}" onclick="openImage(this)">
+            <div class="product-copy" style="padding: 2rem;">
+              <h3>${title}</h3>
+              <p>${description}</p>
+            </div>
+            <button class="button button-card" onclick="buyProduct('${orderName}'); event.stopPropagation();">Order</button>
+          </article>
+        `;
+      }).join('');
+    }
+
+    function applyAdminData(data) {
+      if (!data) return;
+      if (data.siteName) setText('#brand-name', data.siteName);
+      if (data.siteTitle) document.title = data.siteTitle;
+      if (data.metaDescription) {
+        const meta = document.querySelector('meta[name="description"]');
+        if (meta) meta.setAttribute('content', data.metaDescription);
+      }
+
+      setText('#hero-eyebrow', data.hero?.eyebrow);
+      setText('#hero-title', data.hero?.title);
+      setText('#hero-description', data.hero?.description);
+
+      if (data.hero?.images?.length) {
+        document.querySelectorAll('.hero-slider img').forEach((img, index) => {
+          const src = data.hero.images[index];
+          if (src) img.src = src;
+          if (data.hero.alts?.[index]) img.alt = data.hero.alts[index];
+        });
+      }
+
+      setText('#featured-label', data.featuredSection?.label);
+      setText('#featured-title', data.featuredSection?.title);
+      setText('#more-products-title', data.moreProductsSection?.title);
+      setText('#gallery-label', data.gallerySection?.label);
+      setText('#gallery-title', data.gallerySection?.title);
+      setText('#process-label', data.processSection?.label);
+      setText('#process-title', data.processSection?.title);
+      setText('#values-label', data.valuesSection?.label);
+      setText('#values-title', data.valuesSection?.title);
+      setText('#reviews-label', data.reviewsSection?.label);
+      setText('#reviews-title', data.reviewsSection?.title);
+      setText('#order-label', data.orderSection?.label);
+      setText('#order-title', data.orderSection?.title);
+      setText('#order-description', data.orderSection?.description);
+
+      document.querySelectorAll('[data-featured-card]').forEach((card, index) => {
+        const item = data.featuredProducts?.[index];
+        if (!item) return;
+        const img = card.querySelector('img');
+        const title = card.querySelector('h3');
+        const description = card.querySelector('p');
+        if (img) {
+          if (item.img) img.src = item.img;
+          if (item.alt) img.alt = item.alt;
+        }
+        if (title && item.title) title.textContent = item.title;
+        if (description && item.description) description.textContent = item.description;
+        updateButton(card, item);
+      });
+
+      renderMoreProducts(data);
+
+      document.querySelectorAll('[data-gallery-index]').forEach((img, index) => {
+        const item = data.gallery?.[index];
+        if (!item) return;
+        if (item.src) img.src = item.src;
+        if (item.alt) img.alt = item.alt;
+      });
+
+      document.querySelectorAll('[data-process-index]').forEach((card, index) => {
+        const item = data.process?.[index];
+        if (!item) return;
+        const step = card.querySelector('.process-step');
+        const title = card.querySelector('h3');
+        const description = card.querySelector('p');
+        if (step && item.step) step.textContent = item.step;
+        if (title && item.title) title.textContent = item.title;
+        if (description && item.description) description.textContent = item.description;
+      });
+
+      document.querySelectorAll('[data-value-index]').forEach((card, index) => {
+        const item = data.values?.[index];
+        if (!item) return;
+        const icon = card.querySelector('.value-icon');
+        const title = card.querySelector('h3');
+        const description = card.querySelector('p');
+        if (icon && item.icon) icon.textContent = item.icon;
+        if (title && item.title) title.textContent = item.title;
+        if (description && item.description) description.textContent = item.description;
+      });
+
+      document.querySelectorAll('[data-review-index]').forEach((card, index) => {
+        const item = data.reviews?.[index];
+        if (!item) return;
+        const stars = card.querySelector('.stars');
+        const text = card.querySelector('p');
+        if (stars && item.stars) stars.textContent = item.stars;
+        if (text && item.text) text.textContent = item.text;
+      });
+
+      if (data.orderSection?.productOptions) {
+        const select = document.getElementById('product-select');
+        if (select) {
+          select.innerHTML = '<option value="">Select a product</option>' + data.orderSection.productOptions.map(option => `<option value="${option}">${option}</option>`).join('');
+        }
+      }
+    }
+
+    applyAdminData(getAdminData());
+  </script>
+</body>
+</html>

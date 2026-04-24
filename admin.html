@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel - Resin Creations</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght=400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .admin-panel {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 2rem;
+      background: var(--surface);
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+    }
+    .admin-panel h2 {
+      color: var(--accent);
+      margin-bottom: 2rem;
+    }
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-family: inherit;
+    }
+    .form-group textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+    .button-group {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    .image-preview {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+    }
+    .image-preview img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+    .admin-section {
+      display: none;
+      margin-bottom: 2rem;
+      padding: 1.5rem;
+      background: rgba(247, 243, 238, 0.8);
+      border-radius: 16px;
+    }
+    .admin-section.category-selector,
+    .admin-section.admin-actions {
+      display: block;
+    }
+    .admin-section h3 {
+      margin-top: 0;
+      margin-bottom: 1rem;
+      color: var(--accent-dark);
+    }
+    .product-admin-card {
+      border: 1px solid var(--border);
+      padding: 1rem;
+      border-radius: 14px;
+      margin-bottom: 1rem;
+      background: white;
+    }
+    .product-admin-card h4 {
+      margin-top: 0;
+      margin-bottom: 0.75rem;
+    }
+    .admin-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      align-items: center;
+    }
+    .hidden {
+      display: none;
+    }
+    .admin-login {
+      max-width: 500px;
+      margin: 2rem auto;
+      padding: 2rem;
+      background: var(--surface);
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+    }
+    .admin-login h3 {
+      margin-top: 0;
+      color: var(--accent-dark);
+    }
+    .admin-login .button-group {
+      justify-content: flex-start;
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand">Resin Creations</a>
+      <div class="header-actions">
+        <a href="index.html" class="button button-secondary">Back to Site</a>
+        <button type="button" class="button button-secondary hidden" id="logout-button" onclick="logout()">Logout</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container admin-login hidden" id="admin-login">
+      <h3>Admin Login</h3>
+      <div class="form-group">
+        <label for="login-username">Username</label>
+        <input id="login-username" type="text" placeholder="Username">
+      </div>
+      <div class="form-group">
+        <label for="login-password">Password</label>
+        <input id="login-password" type="password" placeholder="Password">
+      </div>
+      <div class="button-group">
+        <button type="button" class="button button-primary" id="login-button">Login</button>
+      </div>
+      <p id="login-error" class="hidden" style="color: #d25454; margin-top: 1rem;">Username or password incorrect.</p>
+    </div>
+
+    <div class="container hidden" id="admin-panel-container">
+      <div class="admin-panel">
+        <h2>Admin Panel</h2>
+        <form id="admin-form">
+          <div class="admin-section category-selector">
+            <h3>Edit Category</h3>
+            <div class="form-group">
+              <label for="category-select">Select Section to Edit</label>
+              <select id="category-select">
+                <option value="site-settings">Site Settings</option>
+                <option value="hero">Hero Section</option>
+                <option value="featured-products">Featured Products</option>
+                <option value="more-products">More Products</option>
+                <option value="gallery">Gallery Images</option>
+                <option value="order">Order Section</option>
+              </select>
+            </div>
+            <div class="button-group">
+              <button type="button" class="button button-primary" onclick="saveData()">Save Changes</button>
+              <button type="button" class="button button-secondary" onclick="loadData()">Load Current Data</button>
+            </div>
+          </div>
+
+          <div class="admin-section" data-category="site-settings">
+            <h3>Site Settings</h3>
+            <div class="form-group">
+              <label for="site-name">Site Name</label>
+              <input type="text" id="site-name" placeholder="Resin Creations">
+            </div>
+            <div class="form-group">
+              <label for="page-title">Page Title</label>
+              <input type="text" id="page-title" placeholder="Best Resin Art in Ambala | Custom Gifts">
+            </div>
+            <div class="form-group">
+              <label for="meta-description">Meta Description</label>
+              <textarea id="meta-description" placeholder="Resin Creations offers luxury custom resin art..."></textarea>
+            </div>
+          </div>
+
+          <div class="admin-section" data-category="hero">
+            <h3>Hero Section</h3>
+            <div class="form-group">
+              <label for="hero-eyebrow">Eyebrow Text</label>
+              <input type="text" id="hero-eyebrow" placeholder="✨ Handcrafted & Personalized">
+            </div>
+            <div class="form-group">
+              <label for="hero-title">Hero Title</label>
+              <input type="text" id="hero-title" placeholder="Luxury Resin Gifts">
+            </div>
+            <div class="form-group">
+              <label for="hero-description">Hero Description</label>
+              <textarea id="hero-description" placeholder="Beautifully crafted custom resin art..."></textarea>
+            </div>
+            <div class="form-group">
+              <label>Banner Images (URLs)</label>
+              <div id="image-urls">
+                <input type="url" id="hero-image-0" placeholder="images/banner1.png">
+                <input type="url" id="hero-image-1" placeholder="images/banner2.png">
+                <input type="url" id="hero-image-2" placeholder="images/banner3.png">
+                <input type="url" id="hero-image-3" placeholder="images/banner4.png">
+              </div>
+            </div>
+          </div>
+
+          <div class="admin-section" data-category="featured-products">
+            <h3>Featured Products</h3>
+            <div id="featured-products">
+              <div class="product-admin-card" data-product-index="0">
+                <h4>Product 1</h4>
+                <div class="form-group">
+                  <label>Image URL</label>
+                  <input type="url" data-key="img" data-index="0" placeholder="images/image2.png">
+                </div>
+                <div class="form-group">
+                  <label>Title</label>
+                  <input type="text" data-key="title" data-index="0" placeholder="🎁 Resin Frame">
+                </div>
+                <div class="form-group">
+                  <label>Description</label>
+                  <textarea data-key="description" data-index="0" placeholder="Personalized resin frames with photo inserts, pearls and gold accents."></textarea>
+                </div>
+                <div class="form-group">
+                  <label>Order Name</label>
+                  <input type="text" data-key="orderName" data-index="0" placeholder="Resin Frame">
+                </div>
+              </div>
+              <div class="product-admin-card" data-product-index="1">
+                <h4>Product 2</h4>
+                <div class="form-group">
+                  <label>Image URL</label>
+                  <input type="url" data-key="img" data-index="1" placeholder="images/image1.png">
+                </div>
+                <div class="form-group">
+                  <label>Title</label>
+                  <input type="text" data-key="title" data-index="1" placeholder="🔑 Resin Key Chain">
+                </div>
+                <div class="form-group">
+                  <label>Description</label>
+                  <textarea data-key="description" data-index="1" placeholder="Personalized resin keychains with letters, names, or photos."></textarea>
+                </div>
+                <div class="form-group">
+                  <label>Order Name</label>
+                  <input type="text" data-key="orderName" data-index="1" placeholder="Resin Key Chain">
+                </div>
+              </div>
+              <div class="product-admin-card" data-product-index="2">
+                <h4>Product 3</h4>
+                <div class="form-group">
+                  <label>Image URL</label>
+                  <input type="url" data-key="img" data-index="2" placeholder="images/image3.png">
+                </div>
+                <div class="form-group">
+                  <label>Title</label>
+                  <input type="text" data-key="title" data-index="2" placeholder="💐 Resin Varmala Preservation">
+                </div>
+                <div class="form-group">
+                  <label>Description</label>
+                  <textarea data-key="description" data-index="2" placeholder="Preserve your wedding varmala..."></textarea>
+                </div>
+                <div class="form-group">
+                  <label>Order Name</label>
+                  <input type="text" data-key="orderName" data-index="2" placeholder="Resin Varmala Preservation">
+                </div>
+              </div>
+              <div class="product-admin-card" data-product-index="3">
+                <h4>Product 4</h4>
+                <div class="form-group">
+                  <label>Image URL</label>
+                  <input type="url" data-key="img" data-index="3" placeholder="images/image4.png">
+                </div>
+                <div class="form-group">
+                  <label>Title</label>
+                  <input type="text" data-key="title" data-index="3" placeholder="📸 Resin Photo Keychain">
+                </div>
+                <div class="form-group">
+                  <label>Description</label>
+                  <textarea data-key="description" data-index="3" placeholder="Custom resin photo keychains with vibrant photos and names."></textarea>
+                </div>
+                <div class="form-group">
+                  <label>Order Name</label>
+                  <input type="text" data-key="orderName" data-index="3" placeholder="Resin Photo Keychain">
+                </div>
+              </div>
+              <div class="product-admin-card" data-product-index="4">
+                <h4>Product 5</h4>
+                <div class="form-group">
+                  <label>Image URL</label>
+                  <input type="url" data-key="img" data-index="4" placeholder="images/image4.png">
+                </div>
+                <div class="form-group">
+                  <label>Title</label>
+                  <input type="text" data-key="title" data-index="4" placeholder="💌 Wedding Card Preservation">
+                </div>
+                <div class="form-group">
+                  <label>Description</label>
+                  <textarea data-key="description" data-index="4" placeholder="Encapsulate wedding cards in premium resin."></textarea>
+                </div>
+                <div class="form-group">
+                  <label>Order Name</label>
+                  <input type="text" data-key="orderName" data-index="4" placeholder="Wedding Card Preservation">
+                </div>
+              </div>
+              <div class="product-admin-card" data-product-index="5">
+                <h4>Product 6</h4>
+                <div class="form-group">
+                  <label>Image URL</label>
+                  <input type="url" data-key="img" data-index="5" placeholder="images/image6.png">
+                </div>
+                <div class="form-group">
+                  <label>Title</label>
+                  <input type="text" data-key="title" data-index="5" placeholder="🙏 Resin Pooja Thali">
+                </div>
+                <div class="form-group">
+                  <label>Description</label>
+                  <textarea data-key="description" data-index="5" placeholder="Handcrafted resin pooja thali with custom colors."></textarea>
+                </div>
+                <div class="form-group">
+                  <label>Order Name</label>
+                  <input type="text" data-key="orderName" data-index="5" placeholder="Resin Pooja Thali">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="admin-section" data-category="more-products">
+            <div style="display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap;">
+              <h3 style="margin: 0;">More Products</h3>
+              <button type="button" class="button button-secondary" id="add-more-product-button">Add Product</button>
+            </div>
+            <div id="more-products">
+              <div class="product-admin-card" data-more-index="0">
+                <h4>Product 7</h4>
+                <div class="form-group">
+                  <label>Title</label>
+                  <input type="text" data-key="title" data-index="0" placeholder="📖 Resin Bookmark">
+                </div>
+                <div class="form-group">
+                  <label>Description</label>
+                  <textarea data-key="description" data-index="0" placeholder="Beautiful resin bookmarks with names, glitter accents, and personalized artwork."></textarea>
+                </div>
+                <div class="form-group">
+                  <label>Order Name</label>
+                  <input type="text" data-key="orderName" data-index="0" placeholder="Resin Bookmark">
+                </div>
+              </div>
+              <div class="product-admin-card" data-more-index="1">
+                <h4>Product 8</h4>
+                <div class="form-group">
+                  <label>Title</label>
+                  <input type="text" data-key="title" data-index="1" placeholder="🧻 Resin Tissue Holder">
+                </div>
+                <div class="form-group">
+                  <label>Description</label>
+                  <textarea data-key="description" data-index="1" placeholder="Decorative resin tissue holders with luxury finishes and custom designs for home or gifting."></textarea>
+                </div>
+                <div class="form-group">
+                  <label>Order Name</label>
+                  <input type="text" data-key="orderName" data-index="1" placeholder="Resin Tissue Holder">
+                </div>
+              </div>
+              <div class="product-admin-card" data-more-index="2">
+                <h4>Product 9</h4>
+                <div class="form-group">
+                  <label>Title</label>
+                  <input type="text" data-key="title" data-index="2" placeholder="🔤 Alphabet Key Chain">
+                </div>
+                <div class="form-group">
+                  <label>Description</label>
+                  <textarea data-key="description" data-index="2" placeholder="Personalized alphabet key chains made in resin for unique name keepsakes and decorative charms."></textarea>
+                </div>
+                <div class="form-group">
+                  <label>Order Name</label>
+                  <input type="text" data-key="orderName" data-index="2" placeholder="Alphabet Key Chain">
+                </div>
+              </div>
+              <div class="product-admin-card" data-more-index="3">
+                <h4>Product 10</h4>
+                <div class="form-group">
+                  <label>Title</label>
+                  <input type="text" data-key="title" data-index="3" placeholder="💎 Customised Ring Plate">
+                </div>
+                <div class="form-group">
+                  <label>Description</label>
+                  <textarea data-key="description" data-index="3" placeholder="Custom resin ring plates with names, dates, and elegant detailing for wedding ceremonies."></textarea>
+                </div>
+                <div class="form-group">
+                  <label>Order Name</label>
+                  <input type="text" data-key="orderName" data-index="3" placeholder="Customised Ring Plate">
+                </div>
+              </div>
+              <div class="product-admin-card" data-more-index="4">
+                <h4>Product 11</h4>
+                <div class="form-group">
+                  <label>Title</label>
+                  <input type="text" data-key="title" data-index="4" placeholder="🪧 Resin Name Board">
+                </div>
+                <div class="form-group">
+                  <label>Description</label>
+                  <textarea data-key="description" data-index="4" placeholder="Custom resin name boards for rooms, desks, or gifting, with premium finishes and personalization."></textarea>
+                </div>
+                <div class="form-group">
+                  <label>Order Name</label>
+                  <input type="text" data-key="orderName" data-index="4" placeholder="Resin Name Board">
+                </div>
+              </div>
+              <div class="product-admin-card" data-more-index="5">
+                <h4>Product 12</h4>
+                <div class="form-group">
+                  <label>Title</label>
+                  <input type="text" data-key="title" data-index="5" placeholder="🚗 Car Hanging">
+                </div>
+                <div class="form-group">
+                  <label>Description</label>
+                  <textarea data-key="description" data-index="5" placeholder="Resin car hangings made to personalize your vehicle with names, initials, or decorative motifs."></textarea>
+                </div>
+                <div class="form-group">
+                  <label>Order Name</label>
+                  <input type="text" data-key="orderName" data-index="5" placeholder="Car Hanging">
+                </div>
+              </div>
+              <div class="product-admin-card" data-more-index="6">
+                <h4>Product 13</h4>
+                <div class="form-group">
+                  <label>Title</label>
+                  <input type="text" data-key="title" data-index="6" placeholder="📟 Dashboard">
+                </div>
+                <div class="form-group">
+                  <label>Description</label>
+                  <textarea data-key="description" data-index="6" placeholder="Resin dashboard decor for cars with elegant custom designs and easy-to-hang styling."></textarea>
+                </div>
+                <div class="form-group">
+                  <label>Order Name</label>
+                  <input type="text" data-key="orderName" data-index="6" placeholder="Dashboard">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="admin-section" data-category="gallery">
+            <h3>Gallery Images</h3>
+            <div id="gallery-images">
+              <div class="form-group">
+                <label>Image 1 URL</label>
+                <input type="url" id="gallery-0-src" placeholder="images/image4.png">
+                <label>Alt Text</label>
+                <input type="text" id="gallery-0-alt" placeholder="Resin keychain close-up">
+              </div>
+              <div class="form-group">
+                <label>Image 2 URL</label>
+                <input type="url" id="gallery-1-src" placeholder="images/image1.png">
+                <label>Alt Text</label>
+                <input type="text" id="gallery-1-alt" placeholder="Resin photo frame styled">
+              </div>
+              <div class="form-group">
+                <label>Image 3 URL</label>
+                <input type="url" id="gallery-2-src" placeholder="images/image3.png">
+                <label>Alt Text</label>
+                <input type="text" id="gallery-2-alt" placeholder="Resin art detail">
+              </div>
+              <div class="form-group">
+                <label>Image 4 URL</label>
+                <input type="url" id="gallery-3-src" placeholder="images/image4.png">
+                <label>Alt Text</label>
+                <input type="text" id="gallery-3-alt" placeholder="Resin product display">
+              </div>
+              <div class="form-group">
+                <label>Image 5 URL</label>
+                <input type="url" id="gallery-4-src" placeholder="https://images.unsplash.com/photo-1602524817863-24b8884d13a0?auto=format&fit=crop&w=900&q=80">
+                <label>Alt Text</label>
+                <input type="text" id="gallery-4-alt" placeholder="Resin art close-up">
+              </div>
+              <div class="form-group">
+                <label>Image 6 URL</label>
+                <input type="url" id="gallery-5-src" placeholder="https://images.unsplash.com/photo-1556012018-79e55c21c1cc?auto=format&fit=crop&w=900&q=80">
+                <label>Alt Text</label>
+                <input type="text" id="gallery-5-alt" placeholder="Premium resin product display">
+              </div>
+            </div>
+          </div>
+
+          <div class="admin-section" data-category="order">
+            <h3>Order Section</h3>
+            <div class="form-group">
+              <label for="order-label">Order Section Label</label>
+              <input type="text" id="order-label" placeholder="Smart Order">
+            </div>
+            <div class="form-group">
+              <label for="order-title">Order Title</label>
+              <input type="text" id="order-title" placeholder="Place Your Order on WhatsApp">
+            </div>
+            <div class="form-group">
+              <label for="order-description">Order Description</label>
+              <textarea id="order-description" placeholder="Fill the form below and send your order instantly..."></textarea>
+            </div>
+            <div class="form-group">
+              <label for="order-options">Product Options (comma separated)</label>
+              <input type="text" id="order-options" placeholder="Resin Frame, Resin Key Chain, Resin Varmala Preservation, Resin Bookmark, Resin Photo Keychain, Resin Tissue Holder, Alphabet Key Chain, Wedding Card Preservation, Customised Ring Plate, Resin Pooja Thali, Resin Name Board, Car Hanging, Dashboard">
+            </div>
+          </div>
+
+          <div class="admin-section admin-actions">
+            <!-- Buttons moved to category selector -->
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const ADMIN_USERNAME = 'admin';
+    const ADMIN_PASSWORD = 'admin123';
+    const loginBox = document.getElementById('admin-login');
+    const loginButton = document.getElementById('login-button');
+    const loginError = document.getElementById('login-error');
+    const loginUsername = document.getElementById('login-username');
+    const loginPassword = document.getElementById('login-password');
+    const adminPanelContainer = document.getElementById('admin-panel-container');
+    const logoutButton = document.getElementById('logout-button');
+    const form = document.getElementById('admin-form');
+    const siteNameInput = document.getElementById('site-name');
+    const pageTitleInput = document.getElementById('page-title');
+    const metaDescriptionInput = document.getElementById('meta-description');
+    const heroEyebrowInput = document.getElementById('hero-eyebrow');
+    const heroTitleInput = document.getElementById('hero-title');
+    const heroDescriptionInput = document.getElementById('hero-description');
+    const heroImageInputs = [
+      document.getElementById('hero-image-0'),
+      document.getElementById('hero-image-1'),
+      document.getElementById('hero-image-2'),
+      document.getElementById('hero-image-3')
+    ];
+    const featuredProductInputs = Array.from(document.querySelectorAll('#featured-products [data-key][data-index]'));
+    const moreProductsContainer = document.getElementById('more-products');
+    const addMoreProductButton = document.getElementById('add-more-product-button');
+
+    const galleryInputs = Array.from({ length: 6 }, (_, index) => ({
+      src: document.getElementById(`gallery-${index}-src`),
+      alt: document.getElementById(`gallery-${index}-alt`)
+    }));
+
+    const orderLabelInput = document.getElementById('order-label');
+    const orderTitleInput = document.getElementById('order-title');
+    const orderDescriptionInput = document.getElementById('order-description');
+    const orderOptionsInput = document.getElementById('order-options');
+
+    const defaultAdminData = {
+      siteName: 'Resin Creations',
+      siteTitle: 'Best Resin Art in Ambala | Custom Gifts',
+      metaDescription: 'Resin Creations offers luxury custom resin art and handmade gifts in Ambala. Premium finishes, personalized orders, and WhatsApp booking.',
+      hero: {
+        eyebrow: '✨ Handcrafted & Personalized',
+        title: 'Luxury Resin Gifts',
+        description: 'Beautifully crafted custom resin art with pearl accents, gold flakes & personalized touches. Perfect for weddings, anniversaries, and memorable moments.',
+        images: [
+          'images/banner1.png',
+          'images/banner2.png',
+          'images/banner3.png',
+          'images/banner4.png'
+        ],
+        alts: [
+          'Resin art image 1',
+          'Resin art image 2',
+          'Resin art image 3',
+          'Resin art image 4'
+        ]
+      },
+      featuredProducts: [
+        { img: 'images/image2.png', title: '🎁 Resin Frame', description: 'Personalized resin frames with photo inserts, pearl accents, and gold detailing. Ideal for weddings, anniversaries, and custom gifting.', orderName: 'Resin Frame', orderLabel: 'Order' },
+        { img: 'images/image1.png', title: '🔑 Resin Key Chain', description: 'Personalized resin keychains with letters, names, or photos. Compact and durable keepsakes for everyday use.', orderName: 'Resin Key Chain', orderLabel: 'Order' },
+        { img: 'images/image3.png', title: '💐 Resin Varmala Preservation', description: 'Preserve your wedding varmala in elegant resin with photo details and custom accents. A beautiful memory keepsake.', orderName: 'Resin Varmala Preservation', orderLabel: 'Order' },
+        { img: 'images/image4.png', title: '📸 Resin Photo Keychain', description: 'Custom resin photo keychains with vibrant photos, names, and decorative details for a memorable gift.', orderName: 'Resin Photo Keychain', orderLabel: 'Order' },
+        { img: 'images/image4.png', title: '💌 Wedding Card Preservation', description: 'Encapsulate wedding cards in premium resin for a stylish keepsake that preserves your invitation forever.', orderName: 'Wedding Card Preservation', orderLabel: 'Order' },
+        { img: 'images/image6.png', title: '🙏 Resin Pooja Thali', description: 'Handcrafted resin pooja thali with custom colors and detailing. Perfect for rituals, decor, and meaningful ceremonies.', orderName: 'Resin Pooja Thali', orderLabel: 'Order' }
+      ],
+      moreProducts: [
+        { title: '📖 Resin Bookmark', description: 'Beautiful resin bookmarks with names, glitter accents, and personalized artwork. Great for book lovers.', orderName: 'Resin Bookmark', orderLabel: 'Order' },
+        { title: '🧻 Resin Tissue Holder', description: 'Decorative resin tissue holders with luxury finishes and custom designs for home or gifting.', orderName: 'Resin Tissue Holder', orderLabel: 'Order' },
+        { title: '🔤 Alphabet Key Chain', description: 'Personalized alphabet key chains made in resin for unique name keepsakes and decorative charms.', orderName: 'Alphabet Key Chain', orderLabel: 'Order' },
+        { title: '💎 Customised Ring Plate', description: 'Custom resin ring plates with names, dates, and elegant detailing for wedding ceremonies.', orderName: 'Customised Ring Plate', orderLabel: 'Order' },
+        { title: '🪧 Resin Name Board', description: 'Custom resin name boards for rooms, desks, or gifting, with premium finishes and personalization.', orderName: 'Resin Name Board', orderLabel: 'Order' },
+        { title: '🚗 Car Hanging', description: 'Resin car hangings made to personalize your vehicle with names, initials, or decorative motifs.', orderName: 'Car Hanging', orderLabel: 'Order' },
+        { title: '📟 Dashboard', description: 'Resin dashboard decor for cars with elegant custom designs and easy-to-hang styling.', orderName: 'Dashboard', orderLabel: 'Order' }
+      ],
+      gallery: [
+        { src: 'images/image4.png', alt: 'Resin keychain close-up' },
+        { src: 'images/image1.png', alt: 'Resin photo frame styled' },
+        { src: 'images/image3.png', alt: 'Resin art detail' },
+        { src: 'images/image4.png', alt: 'Resin product display' },
+        { src: 'https://images.unsplash.com/photo-1602524817863-24b8884d13a0?auto=format&fit=crop&w=900&q=80', alt: 'Resin art close-up' },
+        { src: 'https://images.unsplash.com/photo-1556012018-79e55c21c1cc?auto=format&fit=crop&w=900&q=80', alt: 'Premium resin product display' }
+      ],
+      orderSection: {
+        label: 'Smart Order',
+        title: 'Place Your Order on WhatsApp',
+        description: 'Fill the form below and send your order instantly. We will confirm the details and begin crafting your resin piece.',
+        productOptions: ['Resin Frame', 'Resin Key Chain', 'Resin Varmala Preservation', 'Resin Bookmark', 'Resin Photo Keychain', 'Resin Tissue Holder', 'Alphabet Key Chain', 'Wedding Card Preservation', 'Customised Ring Plate', 'Resin Pooja Thali', 'Resin Name Board', 'Car Hanging', 'Dashboard']
+      }
+    };
+
+    function getSavedData() {
+      const raw = localStorage.getItem('resinAdminData');
+      if (!raw) return defaultAdminData;
+      try {
+        return JSON.parse(raw);
+      } catch (error) {
+        return defaultAdminData;
+      }
+    }
+
+    function setFeaturedFields(data) {
+      featuredProductInputs.forEach(input => {
+        const key = input.dataset.key;
+        const index = Number(input.dataset.index);
+        const value = data.featuredProducts?.[index]?.[key] || '';
+        input.value = value;
+      });
+    }
+
+    function getMoreProductInputs() {
+      return Array.from(document.querySelectorAll('#more-products [data-key][data-index]'));
+    }
+
+    function createMoreProductCard(index) {
+      return `
+        <div class="product-admin-card" data-more-index="${index}">
+          <h4>Product ${index + 7}</h4>
+          <div class="form-group">
+            <label>Title</label>
+            <input type="text" data-key="title" data-index="${index}" placeholder="Product title">
+          </div>
+          <div class="form-group">
+            <label>Description</label>
+            <textarea data-key="description" data-index="${index}" placeholder="Product description..."></textarea>
+          </div>
+          <div class="form-group">
+            <label>Order Name</label>
+            <input type="text" data-key="orderName" data-index="${index}" placeholder="Order name">
+          </div>
+        </div>
+      `;
+    }
+
+    function ensureMoreProductCards(count) {
+      const currentCount = document.querySelectorAll('#more-products .product-admin-card').length;
+      for (let i = currentCount; i < count; i += 1) {
+        moreProductsContainer.insertAdjacentHTML('beforeend', createMoreProductCard(i));
+      }
+    }
+
+    function setMoreFields(data) {
+      ensureMoreProductCards(data.moreProducts?.length || 7);
+      getMoreProductInputs().forEach(input => {
+        const key = input.dataset.key;
+        const index = Number(input.dataset.index);
+        const value = data.moreProducts?.[index]?.[key] || '';
+        input.value = value;
+      });
+    }
+
+    function setGalleryFields(data) {
+      galleryInputs.forEach((field, index) => {
+        field.src.value = data.gallery?.[index]?.src || '';
+        field.alt.value = data.gallery?.[index]?.alt || '';
+      });
+    }
+
+    function setOrderFields(data) {
+      orderLabelInput.value = data.orderSection?.label || '';
+      orderTitleInput.value = data.orderSection?.title || '';
+      orderDescriptionInput.value = data.orderSection?.description || '';
+      orderOptionsInput.value = (data.orderSection?.productOptions || []).join(',');
+    }
+
+    function showLoginError(show) {
+      loginError.classList.toggle('hidden', !show);
+    }
+
+    function isAuthenticated() {
+      return sessionStorage.getItem('adminLoggedIn') === 'true';
+    }
+
+    function showAdminPanel() {
+      loginBox.classList.add('hidden');
+      adminPanelContainer.classList.remove('hidden');
+      logoutButton.classList.remove('hidden');
+      showLoginError(false);
+      loadData();
+    }
+
+    function showLoginPanel() {
+      loginBox.classList.remove('hidden');
+      adminPanelContainer.classList.add('hidden');
+      logoutButton.classList.add('hidden');
+      showLoginError(false);
+    }
+
+    function login() {
+      const username = loginUsername.value.trim();
+      const password = loginPassword.value.trim();
+      if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
+        sessionStorage.setItem('adminLoggedIn', 'true');
+        showAdminPanel();
+      } else {
+        showLoginError(true);
+      }
+    }
+
+    function logout() {
+      sessionStorage.removeItem('adminLoggedIn');
+      showLoginPanel();
+      loginUsername.value = '';
+      loginPassword.value = '';
+    }
+
+    function setFormFromData(data) {
+      siteNameInput.value = data.siteName || '';
+      pageTitleInput.value = data.siteTitle || '';
+      metaDescriptionInput.value = data.metaDescription || '';
+      heroEyebrowInput.value = data.hero?.eyebrow || '';
+      heroTitleInput.value = data.hero?.title || '';
+      heroDescriptionInput.value = data.hero?.description || '';
+      (data.hero?.images || []).forEach((src, index) => {
+        if (heroImageInputs[index]) heroImageInputs[index].value = src;
+      });
+      setFeaturedFields(data);
+      setMoreFields(data);
+      setGalleryFields(data);
+      setOrderFields(data);
+    }
+
+    function getFeaturedData() {
+      const products = [];
+      for (let i = 0; i < 6; i += 1) {
+        const item = {};
+        featuredProductInputs.forEach(input => {
+          if (Number(input.dataset.index) !== i) return;
+          item[input.dataset.key] = input.value;
+        });
+        products.push(item);
+      }
+      return products;
+    }
+
+    function getMoreData() {
+      const products = [];
+      getMoreProductInputs().forEach(input => {
+        const index = Number(input.dataset.index);
+        if (!products[index]) products[index] = {};
+        products[index][input.dataset.key] = input.value;
+      });
+      return products.filter(item => item && Object.keys(item).length > 0);
+    }
+
+    function getGalleryData() {
+      return galleryInputs.map(({ src, alt }) => ({ src: src.value, alt: alt.value }));
+    }
+
+    function getOrderData() {
+      return {
+        label: orderLabelInput.value,
+        title: orderTitleInput.value,
+        description: orderDescriptionInput.value,
+        productOptions: orderOptionsInput.value.split(',').map(item => item.trim()).filter(Boolean)
+      };
+    }
+
+    function saveData() {
+      const data = {
+        siteName: siteNameInput.value,
+        siteTitle: pageTitleInput.value,
+        metaDescription: metaDescriptionInput.value,
+        hero: {
+          eyebrow: heroEyebrowInput.value,
+          title: heroTitleInput.value,
+          description: heroDescriptionInput.value,
+          images: heroImageInputs.map(input => input.value)
+        },
+        featuredProducts: getFeaturedData(),
+        moreProducts: getMoreData(),
+        gallery: getGalleryData(),
+        orderSection: getOrderData()
+      };
+
+      localStorage.setItem('resinAdminData', JSON.stringify(data));
+      alert('Changes saved! Refresh the main site to see updates.');
+    }
+
+    function loadData() {
+      setFormFromData(getSavedData());
+    }
+
+    loginButton.addEventListener('click', login);
+    logoutButton.addEventListener('click', logout);
+
+    addMoreProductButton.addEventListener('click', () => {
+      const currentCount = document.querySelectorAll('#more-products .product-admin-card').length;
+      ensureMoreProductCards(currentCount + 1);
+    });
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      saveData();
+    });
+
+    const categorySelect = document.getElementById('category-select');
+    categorySelect.addEventListener('change', () => {
+      const selected = categorySelect.value;
+      document.querySelectorAll('.admin-section[data-category]').forEach(section => {
+        section.style.display = section.dataset.category === selected ? 'block' : 'none';
+      });
+    });
+
+    // Show default category on load
+    categorySelect.dispatchEvent(new Event('change'));
+
+    window.addEventListener('DOMContentLoaded', () => {
+      if (isAuthenticated()) {
+        showAdminPanel();
+      } else {
+        showLoginPanel();
+      }
+      document.body.classList.add('page-ready');
+    });
+  </script>
+</body>
+</html>
