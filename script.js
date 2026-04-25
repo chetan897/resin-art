@@ -1,4 +1,4 @@
-const whatsappNumber = '8397903160';
+const whatsappNumber = '+918397903160';
 const whatsappBase = `https://wa.me/${whatsappNumber}`;
 const header = document.querySelector('.site-header');
 const backToTopButton = document.getElementById('backToTop');
