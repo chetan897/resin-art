@@ -25,10 +25,10 @@
   <main>
     <section class="hero" id="home">
       <div class="hero-slider" aria-hidden="true">
-        <img src="banner1.png" alt="Resin art image 1">
-        <img src="banner2.png" alt="Resin art image 2">
-        <img src="banner3.png" alt="Resin art image 3">
-        <img src="banner4.png" alt="Resin art image 4">
+        <img src="images/banner1.png" alt="Resin art image 1">
+        <img src="images/banner2.png" alt="Resin art image 2">
+        <img src="images/banner3.png" alt="Resin art image 3">
+        <img src="images/banner4.png" alt="Resin art image 4">
       </div>
       <div class="hero-overlay"></div>
       <div class="floating-elements">
@@ -61,7 +61,7 @@
       </div>
       <div class="container product-grid featured-products">
         <article class="product-card animate-on-scroll" data-featured-card data-card-index="0" onclick="openImage(this)">
-          <img src="image2.png" alt="Resin Frame">
+          <img src="images/image2.png" alt="Resin Frame">
           <div class="product-copy">
             <h3>🎁 Resin Frame</h3>
             <p>Personalized resin frames with photo inserts, pearl accents, and gold detailing. Ideal for weddings, anniversaries, and custom gifting.</p>
@@ -70,7 +70,7 @@
         </article>
 
         <article class="product-card animate-on-scroll" data-featured-card data-card-index="1" onclick="openImage(this)">
-          <img src="image1.png" alt="Resin Key Chain">
+          <img src="images/image1.png" alt="Resin Key Chain">
           <div class="product-copy">
             <h3>🔑 Resin Key Chain</h3>
             <p>Personalized resin keychains with letters, names, or photos. Compact and durable keepsakes for everyday use.</p>
@@ -79,7 +79,7 @@
         </article>
 
         <article class="product-card animate-on-scroll" data-featured-card data-card-index="2" onclick="openImage(this)">
-          <img src="image3.png" alt="Resin Varmala Preservation">
+          <img src="images/image3.png" alt="Resin Varmala Preservation">
           <div class="product-copy">
             <h3>💐 Resin Varmala Preservation</h3>
             <p>Preserve your wedding varmala in elegant resin with photo details and custom accents. A beautiful memory keepsake.</p>
@@ -88,7 +88,7 @@
         </article>
 
         <article class="product-card animate-on-scroll" data-featured-card data-card-index="3" onclick="openImage(this)">
-          <img src="image4.png" alt="Resin Photo Keychain">
+          <img src="images/image4.png" alt="Resin Photo Keychain">
           <div class="product-copy">
             <h3>📸 Resin Photo Keychain</h3>
             <p>Custom resin photo keychains with vibrant photos, names, and decorative details for a memorable gift.</p>
@@ -97,7 +97,7 @@
         </article>
 
         <article class="product-card animate-on-scroll" data-featured-card data-card-index="4" onclick="openImage(this)">
-          <img src="image4.png" alt="Wedding Card Preservation">
+          <img src="images/image4.png" alt="Wedding Card Preservation">
           <div class="product-copy">
             <h3>💌 Wedding Card Preservation</h3>
             <p>Encapsulate wedding cards in premium resin for a stylish keepsake that preserves your invitation forever.</p>
@@ -106,7 +106,7 @@
         </article>
 
         <article class="product-card animate-on-scroll" data-featured-card data-card-index="5" onclick="openImage(this)">
-          <img src="image6.png" alt="Resin Pooja Thali">
+          <img src="images/image6.png" alt="Resin Pooja Thali">
           <div class="product-copy">
             <h3>🙏 Resin Pooja Thali</h3>
             <p>Handcrafted resin pooja thali with custom colors and detailing. Perfect for rituals, decor, and meaningful ceremonies.</p>
@@ -127,10 +127,10 @@
         <h2 id="gallery-title">Our Work</h2>
       </div>
       <div class="container gallery-grid">
-        <img class="animate-on-scroll" data-gallery-index="0" src="image4.png" alt="Resin keychain close-up" onclick="openImage(this)">
-        <img class="animate-on-scroll" data-gallery-index="1" src="image1.png" alt="Resin photo frame styled" onclick="openImage(this)">
-        <img class="animate-on-scroll" data-gallery-index="2" src="image3.png" alt="Resin art detail" onclick="openImage(this)">
-        <img class="animate-on-scroll" data-gallery-index="3" src="image4.png" alt="Resin product display" onclick="openImage(this)">
+        <img class="animate-on-scroll" data-gallery-index="0" src="images/image4.png" alt="Resin keychain close-up" onclick="openImage(this)">
+        <img class="animate-on-scroll" data-gallery-index="1" src="images/image1.png" alt="Resin photo frame styled" onclick="openImage(this)">
+        <img class="animate-on-scroll" data-gallery-index="2" src="images/image3.png" alt="Resin art detail" onclick="openImage(this)">
+        <img class="animate-on-scroll" data-gallery-index="3" src="images/image4.png" alt="Resin product display" onclick="openImage(this)">
         <img class="animate-on-scroll" data-gallery-index="4" src="https://images.unsplash.com/photo-1602524817863-24b8884d13a0?auto=format&fit=crop&w=900&q=80" alt="Resin art close-up" onclick="openImage(this)">
         <img class="animate-on-scroll" data-gallery-index="5" src="https://images.unsplash.com/photo-1556012018-79e55c21c1cc?auto=format&fit=crop&w=900&q=80" alt="Premium resin product display" onclick="openImage(this)">
       </div>
@@ -211,15 +211,31 @@
           <span class="section-label" id="order-label">Smart Order</span>
           <h2 id="order-title">Place Your Order on WhatsApp</h2>
           <p id="order-description">Fill the form below and send your order instantly. We will confirm the details and begin crafting your resin piece.</p>
-        </div>
-        <form class="order-form" onsubmit="sendOrder(event)">
+          <div id="preview-hint" class="preview-intro">✨ Upload your photo and choose a product to see your custom resin art preview in real time.</div>
+          <div class="order-customizer">
+            <div class="customizer-preview">
+              <div class="preview-container">
+                <div class="preview-title">Custom Resin Preview</div>
+                <div class="product-preview">
+                  <canvas id="previewCanvas" width="400" height="300"></canvas>
+                </div>
+                <p class="preview-note">Drag the canvas to inspect your design. Your uploaded photo appears in the preview, but the browser cannot attach the file automatically to WhatsApp. After clicking the order button, attach the same image file in the chat.</p>
+                <div id="order-summary">
+                  <div class="order-summary-item"><strong>Product</strong><span id="summary-product">Select a product</span></div>
+                  <div class="order-summary-item"><strong>Color</strong><span id="summary-color">Gold Accent</span></div>
+                  <div class="order-summary-item"><strong>Custom text</strong><span id="summary-text">None</span></div>
+                  <div class="order-summary-item"><strong>Photo</strong><span id="summary-photo">Not uploaded</span></div>
+                </div>
+              </div>
+            </div>
+            <form class="order-form" onsubmit="sendOrder(event)">
           <label>
             Name
             <input type="text" id="customer-name" placeholder="Your name" required>
           </label>
           <label>
             Product
-            <select id="product-select" required>
+            <select id="product-select" onchange="updatePreview()" required>
               <option value="">Select a product</option>
                   <option value="Resin Frame">Resin Frame</option>
               <option value="Resin Key Chain">Resin Key Chain</option>
@@ -240,10 +256,35 @@
             Custom text
             <input type="text" id="custom-text" placeholder="Name, date or message">
           </label>
-          <button type="submit" class="button button-primary">Send Order on WhatsApp</button>
+          <label>
+            Color (for Keychain & Thali)
+            <input type="color" id="productColor" value="#D9B35F" onchange="updatePreview()">
+          </label>
+          <label>
+            Upload Photo (for custom design)
+            <input type="file" id="photoUpload" accept="image/*,.jfif,.heic,.heif" onchange="handlePhotoUpload(event)">
+            <span class="file-note">Your uploaded photo appears in the preview below. WhatsApp can’t attach the file automatically, so after opening the chat attach the same image manually.</span>
+          </label>
+          <div id="uploaded-photo-preview" class="uploaded-photo-preview" hidden>
+            <strong>📸 Your uploaded photo</strong>
+            <div class="image-preview-wrapper">
+              <img id="preview-uploaded-image" alt="Uploaded photo preview">
+              <div class="image-overlay-hint">Click to view full size</div>
+            </div>
+            <span id="preview-uploaded-name"></span>
+          </div>
+          <button type="submit" class="button button-primary">Place Custom Order on WhatsApp</button>
         </form>
       </div>
     </section>
+
+  <div class="uploaded-image-modal-overlay" id="uploaded-image-modal" onclick="if(event.target.id === 'uploaded-image-modal') closeUploadedImageViewer()">
+    <div class="uploaded-image-modal-card">
+      <button class="modal-close" onclick="closeUploadedImageViewer()" aria-label="Close image">×</button>
+      <img id="modal-uploaded-image" alt="Full size uploaded image">
+      <p id="modal-image-filename" class="modal-image-filename"></p>
+    </div>
+  </div>
   </main>
 
   <button class="back-to-top" id="backToTop" aria-label="Back to top">↑</button>
