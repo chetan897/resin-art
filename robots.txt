@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://chetan897.github.io/resin-art/sitemap.xml
