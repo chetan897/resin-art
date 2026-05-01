@@ -1,8 +1,28 @@
 const whatsappNumber = '+918397903160';
 const whatsappBase = `https://wa.me/${whatsappNumber}`;
+const productPreviewImages = {
+  'Resin Frame': 'images/image2.png',
+  'Resin Key Chain': 'images/image1.png',
+  'Resin Varmala Preservation': 'images/image3.png',
+  'Resin Bookmark': 'images/image5.png',
+  'Resin Photo Keychain': 'images/image4.png',
+  'Resin Tissue Holder': 'images/image5.png',
+  'Alphabet Key Chain': 'images/image1.png',
+  'Wedding Card Preservation': 'images/image4.png',
+  'Customised Ring Plate': 'images/image3.png',
+  'Resin Pooja Thali': 'images/image6.png',
+  'Resin Name Board': 'images/image5.png',
+  'Car Hanging': 'images/image6.png',
+  'Dashboard': 'images/image4.png'
+};
+
 const header = document.querySelector('.site-header');
 const backToTopButton = document.getElementById('backToTop');
 const observerOptions = { threshold: 0.18 };
+
+function getProductPreviewImage(product) {
+  return productPreviewImages[product] || 'images/image4.png';
+}
 
 // Slider variables
 let currentSlide = 0;
@@ -74,8 +94,9 @@ function orderNow() {
   window.open(`${whatsappBase}?text=${encodeURIComponent(message)}`, '_blank');
 }
 
-function buyProduct(product) {
-  const message = `Hello Resin Creations, I am interested in ordering: ${product}.`;
+function buyProduct(product, price) {
+  const amount = price ? `₹${price}` : '₹0';
+  const message = `Hi, I want to order ${product} for ${amount}`;
   window.open(`${whatsappBase}?text=${encodeURIComponent(message)}`, '_blank');
 }
 
@@ -129,42 +150,56 @@ function sendOrder(event) {
   event.preventDefault();
 
   const name = document.getElementById('customer-name').value.trim();
+  const phone = document.getElementById('customer-phone').value.trim();
   const product = document.getElementById('product-select').value;
+  const size = document.getElementById('size-select').value;
   const customText = document.getElementById('custom-text').value.trim();
   const color = document.getElementById('productColor').value;
+  const address = document.getElementById('delivery-address').value.trim();
+  const deliveryDate = document.getElementById('delivery-date').value;
+  const instructions = document.getElementById('special-instructions').value.trim();
   const photoInput = document.getElementById('photoUpload');
 
-  if (!name || !product) {
-    alert('Please enter your name and select a product.');
+  if (!name || !phone || !product) {
+    alert('Please enter your name, phone number, and select a product.');
     return;
   }
 
   const colorLabel = getColorNameFromHex(color);
   const photoUploaded = photoInput && photoInput.files.length > 0;
-  let message = `Hello Resin Creations, I would like to order a custom resin piece.`;
+  let message = `Hi, I want to order:`;
   message += `\nName: ${name}`;
+  message += `\nPhone: ${phone}`;
   message += `\nProduct: ${product}`;
-  if (product.toLowerCase().includes('key chain') || product.toLowerCase().includes('thali')) {
-    message += `\nPreferred color: ${colorLabel}`;
+  message += `\nSize: ${size}`;
+  message += `\nColor: ${colorLabel}`;
+  message += `\nCustom Text: ${customText || 'None'}`;
+  if (address) {
+    message += `\nDelivery Address: ${address}`;
   }
-  if (customText) {
-    message += `\nCustom text / note: ${customText}`;
+  if (deliveryDate) {
+    message += `\nPreferred Delivery Date: ${deliveryDate}`;
+  }
+  if (instructions) {
+    message += `\nSpecial Instructions: ${instructions}`;
   }
   if (photoUploaded) {
-    message += `\nSelected image: ${photoInput.files[0].name}`;
-    message += `\n\nImportant: the selected image is shown in the preview above, but WhatsApp cannot attach the file automatically. After WhatsApp opens, please attach the same photo from your device gallery.`;
-  } else {
-    message += `\nPhoto: Not uploaded`;
+    message += `\nPhoto: ${photoInput.files[0].name}`;
+    message += `\n\nImportant: the uploaded image appears in the preview, but WhatsApp cannot attach files automatically. After WhatsApp opens, please attach the same photo from your device gallery.`;
   }
-  message += `\n\nI want this to be styled as premium resin art with a glossy finish and beautiful detail.`;
 
   saveEnquiry({
     id: Date.now(),
     timestamp: new Date().toISOString(),
     name,
+    phone,
     product,
+    size,
     colorLabel,
     customText,
+    address,
+    deliveryDate,
+    instructions,
     photoName: photoUploaded ? photoInput.files[0].name : null,
     photoData: photoUploaded && uploadedImage ? uploadedImage.src : null,
     message,
@@ -191,24 +226,23 @@ function saveEnquiry(enquiry) {
 }
 
 function updateUploadedPhotoPreview() {
-  const previewContainer = document.getElementById('uploaded-photo-preview');
-  const previewImage = document.getElementById('preview-uploaded-image');
-  const previewName = document.getElementById('preview-uploaded-name');
+  const previewThumb = document.getElementById('preview-uploaded-thumb');
+  const previewUploadedPanel = document.getElementById('preview-uploaded-container');
   const photoInput = document.getElementById('photoUpload');
   const photoFile = photoInput && photoInput.files.length > 0 ? photoInput.files[0] : null;
 
-  if (previewContainer && previewImage && previewName) {
+  if (previewUploadedPanel && previewThumb) {
     if (photoFile && uploadedImage) {
-      previewContainer.hidden = false;
-      previewImage.src = uploadedImage.src;
-      previewName.textContent = photoFile.name;
-      previewImage.style.cursor = 'pointer';
-      previewImage.onclick = () => openUploadedImageViewer(uploadedImage.src, photoFile.name);
+      previewUploadedPanel.classList.remove('hidden');
+      previewThumb.src = uploadedImage.src;
+      previewThumb.alt = photoFile.name;
+      previewThumb.style.cursor = 'pointer';
+      previewThumb.onclick = () => openUploadedImageViewer(uploadedImage.src, photoFile.name);
     } else {
-      previewContainer.hidden = true;
-      previewImage.src = '';
-      previewName.textContent = '';
-      previewImage.onclick = null;
+      previewUploadedPanel.classList.add('hidden');
+      previewThumb.src = '';
+      previewThumb.alt = '';
+      previewThumb.onclick = null;
     }
   }
 }
@@ -234,23 +268,44 @@ function closeUploadedImageViewer() {
 
 function updateOrderSummary() {
   const product = document.getElementById('product-select')?.value || 'Select a product';
+  const size = document.getElementById('size-select')?.value || 'Medium';
   const color = document.getElementById('productColor')?.value || '#D9B35F';
   const customText = document.getElementById('custom-text')?.value.trim() || 'None';
+  const address = document.getElementById('delivery-address')?.value.trim() || 'Not added';
+  const deliveryDate = document.getElementById('delivery-date')?.value || 'Not selected';
+  const instructions = document.getElementById('special-instructions')?.value.trim() || 'None';
   const photoInput = document.getElementById('photoUpload');
   const colorLabel = getColorNameFromHex(color);
   const photoLabel = photoInput && photoInput.files.length > 0
     ? photoInput.files[0].name
     : uploadedImage ? 'Uploaded' : 'Not uploaded';
 
-  const summaryProduct = document.getElementById('summary-product');
-  const summaryColor = document.getElementById('summary-color');
-  const summaryText = document.getElementById('summary-text');
-  const summaryPhoto = document.getElementById('summary-photo');
+  const previewProductImage = document.getElementById('preview-product-image');
+  const previewProductName = document.getElementById('preview-product-name');
+  const previewProductSize = document.getElementById('preview-product-size');
+  const previewColorName = document.getElementById('preview-color-name');
+  const previewColorSwatch = document.getElementById('preview-color-swatch');
+  const previewCustomText = document.getElementById('preview-custom-text');
+  const previewDeliveryDate = document.getElementById('preview-delivery-date');
+  const previewInstructions = document.getElementById('preview-instructions');
+  const previewTextOverlay = document.getElementById('preview-text-overlay');
 
-  if (summaryProduct) summaryProduct.textContent = product;
-  if (summaryColor) summaryColor.textContent = (product.toLowerCase().includes('key chain') || product.toLowerCase().includes('thali')) ? colorLabel : 'Standard';
-  if (summaryText) summaryText.textContent = customText;
-  if (summaryPhoto) summaryPhoto.textContent = photoLabel;
+  if (previewProductImage) {
+    previewProductImage.src = getProductPreviewImage(product);
+    previewProductImage.alt = product ? `${product} preview` : 'Selected resin product preview';
+  }
+  if (previewProductName) previewProductName.textContent = product;
+  if (previewProductSize) previewProductSize.textContent = size;
+  if (previewColorName) previewColorName.textContent = colorLabel;
+  if (previewColorSwatch) previewColorSwatch.style.background = color;
+  if (previewCustomText) previewCustomText.textContent = customText;
+  if (previewDeliveryDate) previewDeliveryDate.textContent = deliveryDate;
+  if (previewInstructions) previewInstructions.textContent = instructions;
+  if (previewTextOverlay) {
+    previewTextOverlay.textContent = customText !== 'None' ? customText : 'Your custom text appears here';
+    previewTextOverlay.classList.toggle('preview-text-empty', customText === 'None');
+  }
+
   updateUploadedPhotoPreview();
 }
 
@@ -289,16 +344,24 @@ function initPage() {
   const customTextInput = document.getElementById('custom-text');
   const colorInput = document.getElementById('productColor');
   const productSelect = document.getElementById('product-select');
+  const sizeSelect = document.getElementById('size-select');
+  const phoneInput = document.getElementById('customer-phone');
+  const addressInput = document.getElementById('delivery-address');
+  const deliveryDateInput = document.getElementById('delivery-date');
+  const instructionsInput = document.getElementById('special-instructions');
 
   if (customTextInput) customTextInput.addEventListener('input', updateOrderSummary);
   if (colorInput) colorInput.addEventListener('input', updateOrderSummary);
   if (productSelect) productSelect.addEventListener('change', updateOrderSummary);
+  if (sizeSelect) sizeSelect.addEventListener('change', updateOrderSummary);
+  if (phoneInput) phoneInput.addEventListener('input', updateOrderSummary);
+  if (addressInput) addressInput.addEventListener('input', updateOrderSummary);
+  if (deliveryDateInput) deliveryDateInput.addEventListener('change', updateOrderSummary);
+  if (instructionsInput) instructionsInput.addEventListener('input', updateOrderSummary);
+
   const photoInput = document.getElementById('photoUpload');
   if (photoInput) {
-    photoInput.addEventListener('change', () => {
-      updateOrderSummary();
-      updateUploadedPhotoPreview();
-    });
+    photoInput.addEventListener('change', updateOrderSummary);
   }
 
   updateOrderSummary();
@@ -329,60 +392,51 @@ let uploadedImage = null;
 function handlePhotoUpload(event) {
   const file = event.target.files[0];
   const isImageFile = file && (file.type.startsWith('image/') || /\.(png|jpe?g|jfif|jpe|heic|heif|gif|webp|bmp|svg)$/i.test(file.name));
-  if (isImageFile) {
-    console.log('Image file selected:', file.name, file.size, 'bytes');
-    const reader = new FileReader();
-    reader.onload = function(e) {
-      console.log('Image loaded successfully');
-      const img = new Image();
-      img.onload = function() {
-        console.log('Image dimensions:', img.width, 'x', img.height);
-        // Resize image to max 800px width/height to reduce size
-        const maxSize = 800;
-        let { width, height } = img;
-        if (width > height) {
-          if (width > maxSize) {
-            height = (height * maxSize) / width;
-            width = maxSize;
-          }
-        } else {
-          if (height > maxSize) {
-            width = (width * maxSize) / height;
-            height = maxSize;
-          }
-        }
-        const canvas = document.createElement('canvas');
-        const ctx = canvas.getContext('2d');
-        canvas.width = width;
-        canvas.height = height;
-        ctx.drawImage(img, 0, 0, width, height);
-        const resizedDataURL = canvas.toDataURL('image/jpeg', 0.8); // Compress to JPEG 80% quality
-        const resizedImg = new Image();
-        resizedImg.onload = function() {
-          uploadedImage = resizedImg;
-          const productSelect = document.getElementById('product-select');
-          if (productSelect && !productSelect.value) {
-            productSelect.value = 'Resin Photo Keychain';
-          }
-          updatePreview();
-          updateUploadedPhotoPreview();
-          updateOrderSummary();
-        };
-        resizedImg.src = resizedDataURL;
-      };
-      img.onerror = function() {
-        console.error('Failed to load image');
-      };
-      img.src = e.target.result;
-    };
-    reader.onerror = function() {
-      console.error('Failed to read file');
-    };
-    reader.readAsDataURL(file);
-  } else {
-    console.log('Invalid file type or no file selected');
+  if (!isImageFile) {
     alert('Please select a valid image file (jpg, png, gif, webp, bmp).');
+    return;
   }
+
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const img = new Image();
+    img.onload = function() {
+      const maxSize = 800;
+      let { width, height } = img;
+      if (width > height && width > maxSize) {
+        height = (height * maxSize) / width;
+        width = maxSize;
+      } else if (height >= width && height > maxSize) {
+        width = (width * maxSize) / height;
+        height = maxSize;
+      }
+
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      canvas.width = width;
+      canvas.height = height;
+      ctx.drawImage(img, 0, 0, width, height);
+      const resizedDataURL = canvas.toDataURL('image/jpeg', 0.8);
+      const resizedImg = new Image();
+      resizedImg.onload = function() {
+        uploadedImage = resizedImg;
+        const productSelect = document.getElementById('product-select');
+        if (productSelect && !productSelect.value) {
+          productSelect.value = 'Resin Photo Keychain';
+        }
+        updateOrderSummary();
+      };
+      resizedImg.src = resizedDataURL;
+    };
+    img.onerror = function() {
+      alert('Unable to load the selected image. Please try a different file.');
+    };
+    img.src = e.target.result;
+  };
+  reader.onerror = function() {
+    alert('Unable to read the selected file. Please try again.');
+  };
+  reader.readAsDataURL(file);
 }
 
 function initPreview() {
